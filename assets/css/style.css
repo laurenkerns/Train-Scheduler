@@ -1,0 +1,13 @@
+body{
+    background-color: lightblue;
+    padding: 10px;
+}
+
+.jumbotron{
+    background: url(..//images/train-photo.jpg);
+    color: white;
+}
+
+#add-train-btn{
+    background: grey;
+}

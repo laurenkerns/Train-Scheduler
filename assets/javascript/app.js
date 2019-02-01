@@ -2,7 +2,7 @@
 
 
 //Initalize FireBase
-  var config = {
+var config = {
     apiKey: "AIzaSyCuSG29Nl8sGq9K6Fvo9CimHLYSuRVf2GU",
     authDomain: "train-scheduler-97b62.firebaseapp.com",
     databaseURL: "https://train-scheduler-97b62.firebaseio.com",
@@ -10,20 +10,26 @@
     storageBucket: "train-scheduler-97b62.appspot.com",
     messagingSenderId: "247571573678"
   };
-
+  
   firebase.initializeApp(config);
   
+  //define database
   var database = firebase.database();
 
+  //Ian my Tutor helped me with this line of code: when trying to submit my info my prevent default wasn't letting me submit: he gave me this soluciton:
+  $('form').on('submit', (event) => {
+      event.preventDefault()
+  });
+
   //add trains
-  $("add-train-btn").on("click", function(event) {
+  $("#add-train-btn").on("click", function(event) {
     event.preventDefault();
 
     //take the user input justing jQuery selectors
     var trainName = $("#Train-name-input").val().trim();
     var trainDestination = $("#Destination-input").val().trim();
     var trainTime = $("#Time-input").val().trim();
-    var trainFrequency = $("Frequency-input").val().trim()
+    var trainFrequency = $("#Frequency-input").val().trim()
 
     //local temp object to hold the emplyee data
     var newTrain = {
@@ -70,14 +76,14 @@
 
     /////Calculate the train times and declare/////
 
-        //first train time converted
-        var trainTimeConverted = moment.unix(trainTime).format("hh:mm")
-
         //current time
         var currentTime = moment();
 
+        //first train time converted
+        var trainTimeConverted = moment(currentTime, "HH:MM");
+
         //difference between times
-        var timeDifference = moment().diff(moment(trainTimeConverted), "minutes");
+        var timeDifference = moment().diff(trainTimeConverted, "minutes");
 
         //time trains are apart--reminder (%: division remainder)
         var trainTimeReminder = timeDifference % trainFrequency;
@@ -86,7 +92,7 @@
         var trainMinAway = trainFrequency - trainTimeReminder;
 
         //NEXT ARRIVAL
-        var nextArrival = moment().add(trainMinAway, "minutes").format("hh:mm");
+        var nextArrival = moment().add(trainMinAway, "minutes").format("HH:MM");
 
 
         //create the new row and add the train information to the new row using jQuery selectors
@@ -94,7 +100,8 @@
             $("<td>").text(trainName),
             $("<td>").text(trainDestination),
             $("<td>").text(trainTime),
-            $("<td>").text(trainFrequency)
+            $("<td>").text(trainFrequency),
+            $("<td>").text(nextArrival)
         );
 
         //append new row to the table
