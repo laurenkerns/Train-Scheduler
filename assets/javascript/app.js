@@ -31,7 +31,7 @@ var config = {
     var trainTime = $("#Time-input").val().trim();
     var trainFrequency = $("#Frequency-input").val().trim()
 
-    //local temp object to hold the emplyee data
+    //local temp object to hold the train data
     var newTrain = {
         name: trainName,
         destination: trainDestination,
@@ -52,7 +52,7 @@ var config = {
     //when information has been inputted send alert to user
     alert("Train information has been submitted!");
 
-    //when user submits the train information, clear all fields to prepare for another emtry
+    //when user submits the train information, clear all fields to prepare for another entry
     $("#Train-name-input").val("");
     $("#Destination-input").val("");
     $("#Time-input").val("");
